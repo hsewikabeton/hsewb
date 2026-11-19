@@ -2,7 +2,7 @@
 
 Aplikasi daftar hadir digital untuk acara HSE: form peserta (dengan paraf, kehadiran online/offline), dashboard panitia (rekap, ubah data, cetak/PDF, unduh Excel), kelola acara dengan link & QR code. Data tersimpan di Google Sheets.
 
-Alamat: **https://hsewb.github.io**
+Alamat: **https://hsewikabeton.github.io/hsewb/**
 
 ## Isi repo
 | File | Fungsi |
@@ -19,15 +19,12 @@ Alamat: **https://hsewb.github.io**
 
 Mengubah kode Apps Script nanti: **Deploy › Manage deployments › Edit › Version: New version** (URL tetap sama).
 
-## 2. Publikasi ke hsewb.github.io
-1. Login GitHub dengan akun bernama **`hsewb`** (nama akun harus persis `hsewb` agar alamatnya `hsewb.github.io`).
-2. **New repository** → nama repo: **`hsewb.github.io`** → Public → Create.
-3. **Add file › Upload files** → upload `index.html` (dan `README.md`) → Commit.
-4. **Settings › Pages** → Source: *Deploy from a branch*, Branch: `main` / `(root)` → Save.
-5. Tunggu 1–2 menit, buka **https://hsewb.github.io**.
+## 2. Publikasi (GitHub Pages)
+Repo: `hsewikabeton/hsewb` → **Settings › Pages** → Source: *Deploy from a branch*, Branch: `main` / `(root)`.
+Setelah `GAS_WEBAPP_URL` diisi, edit `index.html` di GitHub (ikon pensil) lalu Commit — situs otomatis ter-update.
 
 Link per acara (bisa dibuat dari menu *Kelola Acara › Link & QR*):
-`https://hsewb.github.io/?event=EVT-xxxxxxxx-XXXX`
+`https://hsewikabeton.github.io/hsewb/?event=EVT-xxxxxxxx-XXXX`
 
 ## Admin
 Klik ikon profil di kanan atas → login. Username & password disimpan di **Apps Script › Project Settings › Script Properties** (`ADMIN_USER`, `ADMIN_PASS`) dan bisa diganti di sana kapan saja.
