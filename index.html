@@ -4,6 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#079CDB">
+<meta name="description" content="Daftar Hadir HSE Event — isi kehadiran acara HSE secara digital: online/offline, paraf, dan rekap otomatis.">
+<meta property="og:title" content="Daftar Hadir HSE Event">
+<meta property="og:description" content="Isi daftar hadir acara HSE secara digital.">
+<meta name="apple-mobile-web-app-title" content="Daftar Hadir HSE">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%2322c1f5'/%3E%3Cstop offset='1' stop-color='%230567c9'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23g)'/%3E%3Cpath d='M32 52s14-7 14-17.5V22l-14-5-14 5v12.5C18 45 32 52 32 52z' fill='none' stroke='white' stroke-width='4' stroke-linejoin='round'/%3E%3Cpath d='m26 33 4.5 4.5L39 29' fill='none' stroke='white' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <title>Daftar Hadir HSE Event</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -598,7 +603,7 @@ footer{text-align:center;color:var(--faint);font-size:12.5px;padding:0 20px 30px
   </section>
 </main>
 
-<footer id="footer">Daftar Hadir HSE Event · <span id="footOrg">EQHSE Division</span></footer>
+<footer id="footer">© <span id="footYear">2026</span> Daftar Hadir HSE Event · <span id="footOrg">EQHSE Division</span></footer>
 <div class="toasts" id="toasts"></div>
 <div id="printArea"></div>
 
@@ -1419,7 +1424,7 @@ function printList(){
    ===================================================================== */
 (function init(){
   document.title = CONFIG.APP_TITLE + ' · ' + CONFIG.ORG_NAME;
-  $('#brandTitle').textContent = CONFIG.APP_TITLE; $('#brandSub').textContent = CONFIG.ORG_NAME; $('#footOrg').textContent = CONFIG.ORG_NAME;
+  $('#brandTitle').textContent = CONFIG.APP_TITLE; $('#brandSub').textContent = CONFIG.ORG_NAME; $('#footOrg').textContent = CONFIG.ORG_NAME; $('#footYear').textContent = new Date().getFullYear();
   const online = !!CONFIG.GAS_WEBAPP_URL;
   $('#modePill').classList.toggle('live', online);
   $('#modeText').textContent = online ? 'Terhubung' : 'Mode demo';
