@@ -18,6 +18,7 @@
   --text:#0d2537; --muted:#5d7385; --faint:#94a7b6; --border:#dde7ef; --border-strong:#c7d6e2;
   --ok:#14a36b; --ok-soft:rgba(20,163,107,.12); --danger:#e2485b; --danger-soft:rgba(226,72,91,.12); --warn:#f0a020;
   --ink:#0d2537;
+  --c-off:#0a8fd0; --c-on:#7c5cff;
   --shadow:0 1px 2px rgba(13,37,55,.04),0 12px 32px -12px rgba(13,37,55,.14);
   --shadow-lg:0 30px 60px -20px rgba(13,37,55,.28);
   --radius:22px; --radius-sm:14px;
@@ -29,6 +30,7 @@
   --text:#e5f0f8; --muted:#8fa6b8; --faint:#5b7488; --border:#1c3246; --border-strong:#29445c;
   --primary-soft:rgba(7,156,219,.18); --ok-soft:rgba(20,163,107,.18); --danger-soft:rgba(226,72,91,.18);
   --ink:#e5f0f8;
+  --c-off:#1e9fe0; --c-on:#8b6dff;
   --shadow:0 1px 2px rgba(0,0,0,.3),0 16px 40px -16px rgba(0,0,0,.6);
   --shadow-lg:0 30px 70px -20px rgba(0,0,0,.7);
   --blob1:rgba(7,156,219,.16); --blob2:rgba(110,90,255,.12);
@@ -245,6 +247,42 @@ tbody tr:hover{background:var(--surface-2)}
 .chip button:hover{background:var(--danger-soft);color:var(--danger)}
 .chip svg.i{width:14px;height:14px}
 
+/* Analisa */
+.ana-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media (max-width:900px){.ana-grid{grid-template-columns:1fr}}
+.span2{grid-column:1/-1}
+.sesi-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:560px){.sesi-grid{grid-template-columns:1fr}}
+.badge.rec{background:rgba(124,92,255,.14);color:#7c5cff}
+.ch-h{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:6px;margin-bottom:16px}
+.ch-h h4{margin:0;font-size:15.5px}
+.hb{display:flex;flex-direction:column;gap:14px}
+.hb-row .top{display:flex;justify-content:space-between;gap:10px;font-size:13.5px;margin-bottom:6px}
+.hb-row .top b{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hb-row .top span{color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums}
+.hb-track{position:relative;height:12px;border-radius:4px;background:var(--surface-3);cursor:default}
+.hb-fill{position:absolute;left:0;top:0;bottom:0;border-radius:0 4px 4px 0;background:var(--c-off);transition:width .5s cubic-bezier(.2,.8,.2,1)}
+.hb-track:hover .hb-fill{filter:brightness(1.12)}
+.hb-goal{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--muted);border-radius:1px}
+.donut-wrap{display:flex;align-items:center;gap:26px;flex-wrap:wrap}
+.donut-wrap svg{width:170px;height:170px;flex:none}
+.donut-wrap path{cursor:default;transition:opacity .15s}
+.donut-wrap path:hover{opacity:.85}
+.legend{display:flex;flex-direction:column;gap:12px;font-size:14px}
+.legend .lg{display:flex;align-items:center;gap:10px}
+.legend .sw{width:12px;height:12px;border-radius:3px;flex:none}
+.legend b{font-size:20px;font-weight:700;display:block;line-height:1.1;font-variant-numeric:tabular-nums}
+.legend small{color:var(--muted)}
+.cols{display:flex;align-items:flex-end;gap:8px;height:180px;padding-top:20px;border-bottom:1px solid var(--border)}
+.col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;cursor:default}
+.col i{display:block;width:100%;max-width:44px;border-radius:4px 4px 0 0;background:var(--c-off);transition:height .5s cubic-bezier(.2,.8,.2,1)}
+.col:hover i{filter:brightness(1.12)}
+.col em{font-style:normal;font-size:12px;color:var(--muted);margin-bottom:4px;font-variant-numeric:tabular-nums}
+.col-x{display:flex;gap:8px;margin-top:6px}
+.col-x span{flex:1;text-align:center;font-size:11.5px;color:var(--muted)}
+.tip{position:fixed;z-index:300;pointer-events:none;background:var(--text);color:var(--surface);font-size:12.5px;font-weight:500;padding:7px 10px;border-radius:9px;box-shadow:var(--shadow-lg);white-space:nowrap;transform:translate(-50%,calc(-100% - 10px));opacity:0;transition:opacity .12s}
+.tip.on{opacity:1}
+
 /* Modal */
 .modal{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:20px;background:rgba(4,14,22,.5);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);animation:fade .2s}
 .modal-box{width:100%;max-width:440px;background:var(--surface);border:1px solid var(--border);border-radius:24px;box-shadow:var(--shadow-lg);padding:26px;animation:up .3s cubic-bezier(.2,1,.3,1);max-height:92vh;overflow:auto}
@@ -278,19 +316,38 @@ footer{text-align:center;color:var(--faint);font-size:12.5px;padding:0 20px 30px
 /* Print */
 #printArea{display:none}
 @media print{
-  @page{size:A4;margin:14mm}
-  body{background:#fff!important;color:#000}
-  body::before,.topbar,main,footer,.toasts,.modal{display:none!important}
-  #printArea{display:block;font-family:var(--font);color:#000}
-  #printArea h1{font-size:18pt;margin:0 0 2mm;text-align:center}
-  #printArea .ps{text-align:center;font-size:10.5pt;margin-bottom:5mm}
-  #printArea table.info{width:auto;margin-bottom:5mm;font-size:10.5pt}
-  #printArea table.info td{border:0;padding:1mm 3mm 1mm 0}
-  #printArea table.list{width:100%;border-collapse:collapse;font-size:10pt}
-  #printArea table.list th,#printArea table.list td{border:1px solid #000;padding:2mm 2.5mm;position:static;background:#fff;color:#000;text-transform:none;letter-spacing:0;font-size:10pt}
-  #printArea table.list th{background:#e8eef3!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  #printArea tr{page-break-inside:avoid}
-  #printArea img{height:11mm;max-width:32mm;object-fit:contain}
+  @page{size:A4;margin:0}
+  html,body{background:#fff!important;color:#000}
+  body::before,.topbar,main,footer,.toasts,.modal,.tip{display:none!important}
+  #printArea{display:block}
+  .sheet{width:210mm;min-height:296mm;padding:12mm 14mm 10mm;box-sizing:border-box;page-break-after:always;break-after:page;font-family:Arial,Helvetica,sans-serif;font-size:9.5pt;color:#000;position:relative}
+  .sheet:last-child{page-break-after:auto;break-after:auto}
+  .f-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:9mm}
+  .f-co{font-size:9.5pt;line-height:1.35;padding-top:5mm}
+  .f-no{text-align:right}
+  .f-lamp{font-weight:700;font-size:8.5pt;margin-bottom:1mm}
+  .f-no table{border-collapse:collapse;font-size:8pt;font-weight:700}
+  .f-no td{border:1px solid #000;padding:.6mm 3mm}
+  .sheet h2{text-align:center;font-size:10.5pt;letter-spacing:.06em;margin:0 0 4mm}
+  .f-info{border-collapse:collapse;margin:0 0 4mm 30mm;font-size:9.5pt}
+  .f-info td{padding:.5mm 2mm .5mm 0;vertical-align:top}
+  .f-info td:first-child{width:24mm}
+  .f-info td:nth-child(2){width:6mm}
+  .sheet table th,.sheet table td{position:static;background:transparent;color:#000;text-transform:none;letter-spacing:0;font-size:inherit}
+  .sheet tbody tr:hover{background:transparent}
+  .f-info td,.f-info tr:last-child td{border:0!important}
+  .f-list{width:100%;border-collapse:collapse;table-layout:fixed;font-size:9pt}
+  .f-list th,.f-list td{border:1px solid #000;padding:0 1.6mm;height:7.4mm;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+  .f-list thead th{font-weight:700;text-align:center;height:6.5mm;border-width:1.5px 1px;font-size:9pt}
+  .f-list tbody tr:last-child td{border-bottom:1.5px solid #000}
+  .f-list td.c{text-align:center}
+  .f-list td.sg{text-align:center;padding:0}
+  .f-list td.gr{background:#bfbfbf!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .f-list img{height:6.6mm;max-width:100%;object-fit:contain;display:block;margin:0 auto}
+  .f-list tr{page-break-inside:avoid}
+  .f-sign{width:48mm;margin:7mm 8mm 0 auto;font-size:9.5pt;line-height:1.3}
+  .f-line{margin-top:20mm;border-top:1px solid #000;padding-top:1mm;min-height:4mm;text-align:center}
+  .f-pg{position:absolute;left:14mm;bottom:7mm;font-size:7.5pt;color:#666}
 }
 </style>
 </head>
@@ -327,6 +384,7 @@ footer{text-align:center;color:var(--faint);font-size:12.5px;padding:0 20px 30px
     <symbol id="i-back" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
     <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M21 12a9 9 0 0 1-15.5 6.3L3 16M3 12a9 9 0 0 1 15.5-6.3L21 8M21 3v5h-5M3 21v-5h5"/></symbol>
     <symbol id="i-wifi" viewBox="0 0 24 24"><path d="M5 12.6a10 10 0 0 1 14 0M8.5 16a5 5 0 0 1 7 0M2 8.8a15 15 0 0 1 20 0M12 20h.01"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15v3M12 10v8M17 6v12"/></symbol>
     <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="4"/><path d="M2 21a7 7 0 0 1 14 0M16 3.1a4 4 0 0 1 0 7.8M22 21a7 7 0 0 0-4-6.3"/></symbol>
   </defs>
 </svg>
@@ -391,6 +449,14 @@ footer{text-align:center;color:var(--faint);font-size:12.5px;padding:0 20px 30px
               <div class="control"><svg class="i"><use href="#i-flag"/></svg><select class="select" id="fEvent" name="eventId"><option value="">Memuat acara…</option></select></div>
               <div class="err-msg">Silakan pilih acara.</div>
             </div>
+            <div class="field full hidden reveal" data-f="sesi" id="sesiField">
+              <label>Waktu Kehadiran <span class="req">*</span> <span class="opt">(acara berulang — isi tanggal & jam Anda hadir)</span></label>
+              <div class="sesi-grid">
+                <div class="control"><svg class="i"><use href="#i-cal"/></svg><input class="input" type="date" id="fTglHadir" aria-label="Tanggal hadir"></div>
+                <div class="control"><svg class="i"><use href="#i-clock"/></svg><input class="input" type="time" id="fJamHadir" aria-label="Jam hadir"></div>
+              </div>
+              <div class="err-msg" id="sesiErr">Isi tanggal & jam hadir sesuai periode acara.</div>
+            </div>
             <div class="field">
               <label for="fTanggal">Tanggal Pengisian</label>
               <div class="control"><svg class="i"><use href="#i-cal"/></svg><input class="input" id="fTanggal" readonly></div>
@@ -415,8 +481,7 @@ footer{text-align:center;color:var(--faint);font-size:12.5px;padding:0 20px 30px
             </div>
             <div class="field" data-f="jabatan">
               <label for="fJabatan">Jabatan <span class="req">*</span></label>
-              <div class="control"><svg class="i"><use href="#i-badge"/></svg><input class="input" id="fJabatan" name="jabatan" list="jabatanList" placeholder="Pilih atau ketik jabatan" maxlength="80" autocomplete="off"></div>
-              <datalist id="jabatanList"></datalist>
+              <div class="control"><svg class="i"><use href="#i-badge"/></svg><input class="input" id="fJabatan" name="jabatan" placeholder="Contoh: VP / Manager / Section Head / Officer / Staff" maxlength="80" autocomplete="organization-title"></div>
               <div class="err-msg">Jabatan wajib diisi.</div>
             </div>
             <div class="field full" data-f="email">
@@ -463,6 +528,7 @@ footer{text-align:center;color:var(--faint);font-size:12.5px;padding:0 20px 30px
     </div>
     <div class="tabs" role="tablist">
       <button class="tab on" data-tab="rekap"><svg class="i"><use href="#i-list"/></svg>Rekap Kehadiran</button>
+      <button class="tab" data-tab="analisa"><svg class="i"><use href="#i-chart"/></svg>Analisa Kehadiran</button>
       <button class="tab" data-tab="acara"><svg class="i"><use href="#i-flag"/></svg>Kelola Acara</button>
       <button class="tab" data-tab="unit"><svg class="i"><use href="#i-gear"/></svg>Unit Kerja</button>
     </div>
@@ -478,6 +544,7 @@ footer{text-align:center;color:var(--faint);font-size:12.5px;padding:0 20px 30px
         <div class="card panel">
           <div class="toolbar">
             <select class="select" id="filterEvt"><option value="">Semua acara</option></select>
+            <select class="select hidden" id="filterSesi" style="max-width:240px"><option value="">Semua sesi</option></select>
             <div class="control"><svg class="i"><use href="#i-search"/></svg><input class="input" id="search" placeholder="Cari nama, unit, jabatan…"></div>
           </div>
           <div class="toolbar" style="margin-top:-4px">
@@ -494,6 +561,21 @@ footer{text-align:center;color:var(--faint);font-size:12.5px;padding:0 20px 30px
           </div>
         </div>
         <div class="card panel bars" id="unitBars"></div>
+      </div>
+    </div>
+
+    <div id="tabAnalisa" class="hidden">
+      <div class="toolbar">
+        <select class="select" id="anaEvt" style="max-width:360px"><option value="">Semua acara</option></select>
+        <span class="hint" style="margin:0">Persentase kehadiran = jumlah hadir ÷ target peserta (diisi di Kelola Acara).</span>
+      </div>
+      <div class="stats" id="anaStats"></div>
+      <div class="ana-grid">
+        <div class="card panel"><div class="ch-h"><h4>Persentase kehadiran per acara</h4><span class="hint" style="margin:0">Hadir dibanding target</span></div><div id="anaEvents"></div></div>
+        <div class="card panel"><div class="ch-h"><h4>Online vs Offline</h4><span class="hint" style="margin:0">Proporsi peserta hadir</span></div><div id="anaMode"></div></div>
+        <div class="card panel"><div class="ch-h"><h4>Komposisi unit kerja</h4><span class="hint" style="margin:0">% dari total hadir</span></div><div id="anaUnit"></div></div>
+        <div class="card panel"><div class="ch-h"><h4>Komposisi jabatan</h4><span class="hint" style="margin:0">% dari total hadir</span></div><div id="anaJab"></div></div>
+        <div class="card panel span2"><div class="ch-h"><h4>Jam kedatangan</h4><span class="hint" style="margin:0">Jumlah peserta per jam hadir</span></div><div id="anaHour"></div></div>
       </div>
     </div>
 
@@ -535,6 +617,12 @@ const CONFIG = {
   GAS_WEBAPP_URL: '',
   APP_TITLE: 'Daftar Hadir HSE Event',
   ORG_NAME: 'EQHSE Division',
+  // Kop formulir cetak (format WB-CPR-PS-01-F27)
+  PRINT_COMPANY: 'PT Wijaya Karya Beton Tbk.',
+  PRINT_LAMPIRAN: 'Lampiran B.27',
+  PRINT_FORM_NO: 'WB-CPR-PS-01-F27',
+  PRINT_REV: '00',
+  PRINT_ROWS_PER_PAGE: 25,
 };
 
 /* ---------- utils ---------- */
@@ -606,7 +694,10 @@ const DEFAULT_UNITS = ['Head Office','PCP Sumatera Utara','PCP Lampung','PCP Bog
   'Sales Area I','Sales Area II','Sales Area III','Sales Area IV','Sales Area V','Sales Area VI','Concrete Service Unit','Mobile Concrete Services',
   'Mobile Plant Batulicin','WIKA Citra Lautan Teduh','WIKA Komponen Beton','WIKA Kraton','WIKA Pracetak Gedung'];
 const UNIT_MANUAL = 'Lainnya / ketik manual';
-const JABATAN = ['Direktur','General Manager','Kepala Divisi','Manager','Kepala Seksi','Supervisor','Koordinator','Officer','Staff','Operator','Pelaksana','Mandor','Petugas K3 / HSE','Tenaga Kontrak','Siswa / Mahasiswa Magang','Tamu / Vendor'];
+const POLA = { harian:'Setiap hari', mingguan:'Setiap minggu', bulanan:'Setiap bulan', tidak_tentu:'Jadwal tidak tentu' };
+const todayISO = () => { const d=new Date(); return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10); };
+const nowHM = () => { const d=new Date(); return String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0'); };
+const evById = id => (state.allEvents.length?state.allEvents:state.events).find(e=>e.id===id) || state.events.find(e=>e.id===id);
 const DEMO_LOGIN_HASH = 'dd09cf0f'; // demo saja; login asli dicek di server (Code.gs)
 const Demo = {
   KEY:'absensi_hse_demo_db', mem:null,
@@ -616,8 +707,8 @@ const Demo = {
     if(!d){
       const today = new Date(); const iso = today.toISOString().slice(0,10);
       d = { units:[...DEFAULT_UNITS], rows:[], events:[
-        { id:'EVT-DEMO-0001', nama:'Safety Briefing & Toolbox Meeting', tanggal:iso, jam:'08.00 – 09.30 WIB', tempat:'Ruang Rapat Lt. 2', aktif:true, dibuat:today.toISOString() },
-        { id:'EVT-DEMO-0002', nama:'Sosialisasi SMK3 & Tanggap Darurat', tanggal:iso, jam:'13.00 – 15.00 WIB', tempat:'Aula Utama', aktif:true, dibuat:today.toISOString() }
+        { id:'EVT-DEMO-0001', nama:'Safety Briefing & Toolbox Meeting', tanggal:iso, jam:'08.00 – 09.30 WIB', tempat:'R. Building Lantai 3 WITO 1', aktif:true, target:25, penyelenggara:'Kantor Pusat', pimpinan:'', dibuat:today.toISOString() },
+        { id:'EVT-DEMO-0002', nama:'Sosialisasi SMK3 & Tanggap Darurat', tanggal:iso, jam:'13.00 – 15.00 WIB', tempat:'Aula Utama', aktif:true, target:40, penyelenggara:'Kantor Pusat', pimpinan:'', dibuat:today.toISOString() }
       ]};
     }
     this.mem = d; return d;
@@ -631,8 +722,9 @@ const Demo = {
       case 'config': return { events: db.events.filter(e=>e.aktif), units: db.units };
       case 'submit': {
         const r = validateSubmit(p, db.events);
-        if(db.rows.some(x => x.eventId===r.eventId && x.nama.toLowerCase()===r.nama.toLowerCase()))
-          throw new Error(`"${r.nama}" sudah tercatat hadir di acara ini.`);
+        const rec = db.events.find(e=>e.id===r.eventId)?.recurring;
+        if(db.rows.some(x => x.eventId===r.eventId && x.nama.toLowerCase()===r.nama.toLowerCase() && (!rec || x.tanggalHadir===r.tanggalHadir)))
+          throw new Error(`"${r.nama}" sudah tercatat hadir di ${rec?'sesi tanggal ini':'acara ini'}.`);
         r.id = 'ATT-' + Date.now().toString(36).toUpperCase(); r.waktu = new Date().toISOString();
         db.rows.push(r); this.save(); return { id:r.id, waktu:r.waktu };
       }
@@ -672,10 +764,18 @@ function validateSubmit(p, events){
   if(!p.eventId) throw new Error('Silakan pilih acara.');
   const ev = events.find(e=>e.id===p.eventId && e.aktif);
   if(!ev) throw new Error('Acara tidak ditemukan atau sudah ditutup.');
-  return { eventId:ev.id, acara:ev.nama, tanggalAcara:ev.tanggal, ...r, paraf: String(p.paraf||'') };
+  let tgl = String(p.tanggalHadir||'').slice(0,10), jam = String(p.jamHadir||'').slice(0,5);
+  if(ev.recurring){
+    if(!/^\d{4}-\d{2}-\d{2}$/.test(tgl) || !/^\d{2}:\d{2}$/.test(jam)) throw new Error('Isi tanggal & jam hadir.');
+    if((ev.tanggal && tgl < ev.tanggal) || (ev.sampai && tgl > ev.sampai)) throw new Error('Tanggal hadir di luar periode acara.');
+  } else tgl = ev.tanggal || tgl;
+  return { eventId:ev.id, acara:ev.nama, tanggalAcara:ev.tanggal, ...r, paraf: String(p.paraf||''), tanggalHadir:tgl, jamHadir:jam };
 }
 function cleanEvent(e){
-  const o = { id:e.id||'', nama:String(e.nama||'').trim(), tanggal:String(e.tanggal||''), jam:String(e.jam||'').trim(), tempat:String(e.tempat||'').trim(), aktif:!!e.aktif };
+  const o = { id:e.id||'', nama:String(e.nama||'').trim(), tanggal:String(e.tanggal||''), jam:String(e.jam||'').trim(), tempat:String(e.tempat||'').trim(), aktif:!!e.aktif,
+    target:Math.max(0, parseInt(e.target,10)||0), penyelenggara:String(e.penyelenggara||'').trim() || 'Kantor Pusat', pimpinan:String(e.pimpinan||'').trim(),
+    recurring:!!e.recurring, pola: POLA[e.pola] ? e.pola : 'mingguan', sampai: e.recurring ? String(e.sampai||'') : '' };
+  if(o.recurring && o.sampai && o.tanggal && o.sampai < o.tanggal) throw new Error('Tanggal "berlaku sampai" harus setelah tanggal mulai.');
   if(!o.nama) throw new Error('Nama acara wajib diisi.');
   return o;
 }
@@ -735,7 +835,7 @@ const Draft = {
     }, 350);
   },
   load(){ return ls.get(this.KEY); },
-  clear(){ ls.del(this.KEY); $('#draftSt').textContent = 'Draft otomatis aktif'; }
+  clear(){ clearTimeout(this.t); ls.del(this.KEY); $('#draftSt').textContent = 'Draft otomatis aktif'; }
 };
 
 /* =====================================================================
@@ -755,12 +855,11 @@ function urlEventId(){
 function renderEventOptions(){
   const sel = $('#fEvent'), cur = sel.value;
   sel.innerHTML = `<option value="">${state.events.length ? 'Pilih acara aktif' : 'Belum ada acara aktif'}</option>` +
-    state.events.map(e=>`<option value="${esc(e.id)}">${esc(e.nama)}${e.tanggal?' — '+esc(fmtDate(e.tanggal,{day:'numeric',month:'short'})):''}</option>`).join('');
+    state.events.map(e=>{ const d = !e.recurring && Done.get(e.id); return `<option value="${esc(e.id)}" ${d?'disabled':''}>${esc(e.nama)}${e.tanggal?' — '+esc(fmtDate(e.tanggal,{day:'numeric',month:'short'})):''}${d?' (✓ sudah diisi)':''}</option>`; }).join('');
   if(cur) sel.value = cur;
   const u = $('#fUnit'), cu = u.value;
   u.innerHTML = '<option value="">Pilih unit kerja</option>' + state.units.map(x=>`<option>${esc(x)}</option>`).join('') + `<option>${UNIT_MANUAL}</option>`;
   if(cu) u.value = cu;
-  $('#jabatanList').innerHTML = JABATAN.map(j=>`<option value="${esc(j)}">`).join('');
   syncUnit();
 }
 function getMode(){ return ($('input[name=mode]:checked')||{}).value || 'Offline'; }
@@ -771,17 +870,40 @@ function syncMode(){
 }
 function syncUnit(){ const m = $('#fUnit').value===UNIT_MANUAL; $('#unitLainWrap').classList.toggle('hidden', !m); }
 function unitValue(){ return $('#fUnit').value===UNIT_MANUAL ? $('#fUnitLain').value.trim() : $('#fUnit').value; }
+function checkDone(){
+  const id = $('#fEvent').value, ev = state.events.find(e=>e.id===id);
+  if(!ev) return false;
+  if(ev.recurring){
+    const d = Done.get(id+'|'+$('#fTglHadir').value), f = $('#sesiField'), m = $('#sesiErr');
+    if(d){ f.classList.add('err'); m.textContent = 'Anda sudah mengisi daftar hadir untuk tanggal ini. Pengisian hanya satu kali per sesi.'; }
+    else if(m.textContent.startsWith('Anda sudah')){ f.classList.remove('err'); m.textContent = 'Isi tanggal & jam hadir sesuai periode acara.'; }
+    return !!d;
+  }
+  const d = Done.get(id);
+  if(!d) return false;
+  showSuccess(d, ev, { waktu:d.waktu }, true);
+  return true;
+}
 function onEventChange(){
   const ev = state.events.find(e=>e.id===$('#fEvent').value);
   const t = $('#fTempat'); if(ev?.tempat && (!t.value.trim() || t.dataset.auto==='1')){ t.value = ev.tempat; t.dataset.auto='1'; }
+  const rec = !!ev?.recurring; $('#sesiField').classList.toggle('hidden', !rec);
+  if(rec){
+    const d = $('#fTglHadir'); d.min = ev.tanggal||''; d.max = ev.sampai||'';
+    let v = d.value || todayISO(); if(ev.tanggal && v < ev.tanggal) v = ev.tanggal; if(ev.sampai && v > ev.sampai) v = ev.sampai; d.value = v;
+    if(!$('#fJamHadir').value) $('#fJamHadir').value = nowHM();
+  } else $('#sesiField').classList.remove('err');
   $('#evtInfo').innerHTML = ev ? `
     <div class="evt-name">${esc(ev.nama)}</div>
     <div class="meta">
-      <div class="meta-row"><span class="meta-ic">${ico('cal')}</span><div><div class="meta-l">Tanggal</div><div class="meta-v">${esc(fmtDate(ev.tanggal,{weekday:'long',day:'numeric',month:'long',year:'numeric'}))}</div></div></div>
+      ${ev.recurring?`<div class="meta-row"><span class="meta-ic">${ico('refresh')}</span><div><div class="meta-l">Acara berulang</div><div class="meta-v">${esc(POLA[ev.pola]||'Berulang')}</div></div></div>
+      <div class="meta-row"><span class="meta-ic">${ico('cal')}</span><div><div class="meta-l">Periode</div><div class="meta-v">${esc(fmtDate(ev.tanggal))}${ev.sampai?' – '+esc(fmtDate(ev.sampai)):' – seterusnya'}</div></div></div>`
+      :`<div class="meta-row"><span class="meta-ic">${ico('cal')}</span><div><div class="meta-l">Tanggal</div><div class="meta-v">${esc(fmtDate(ev.tanggal,{weekday:'long',day:'numeric',month:'long',year:'numeric'}))}</div></div></div>`}
       ${ev.jam?`<div class="meta-row"><span class="meta-ic">${ico('clock')}</span><div><div class="meta-l">Waktu</div><div class="meta-v">${esc(ev.jam)}</div></div></div>`:''}
       ${ev.tempat?`<div class="meta-row"><span class="meta-ic">${ico('pin')}</span><div><div class="meta-l">Lokasi</div><div class="meta-v">${esc(ev.tempat)}</div></div></div>`:''}
       <div class="meta-row" style="margin-top:4px"><span class="code">${esc(ev.id)}</span></div>
     </div>` : '<div class="evt-empty">Pilih acara pada formulir untuk melihat detailnya.</div>';
+  checkDone();
 }
 function updateProgress(){
   const n = [$('#fNama').value.trim(), $('#fEvent').value, unitValue(), $('#fJabatan').value.trim(), getMode()==='Online' || $('#fTempat').value.trim(), !Sig.empty()].filter(Boolean).length;
@@ -792,6 +914,12 @@ function validate(){
   const set = (f, bad) => { $(`.field[data-f="${f}"]`).classList.toggle('err', bad); if(bad) ok=false; };
   set('nama', !$('#fNama').value.trim());
   set('eventId', !$('#fEvent').value);
+  const evv = state.events.find(e=>e.id===$('#fEvent').value);
+  if(evv?.recurring){
+    const tg = $('#fTglHadir').value, bad = !tg || !$('#fJamHadir').value || (evv.tanggal && tg < evv.tanggal) || (evv.sampai && tg > evv.sampai);
+    if(bad) $('#sesiErr').textContent = 'Isi tanggal & jam hadir sesuai periode acara.';
+    set('sesi', bad);
+  }
   set('unit', !unitValue());
   set('tempat', getMode()==='Offline' && !$('#fTempat').value.trim());
   set('jabatan', !$('#fJabatan').value.trim());
@@ -802,33 +930,43 @@ function validate(){
 async function submitForm(e){
   e.preventDefault();
   if(!validate()){ toast('Periksa kembali kolom yang ditandai.', 'err'); return; }
+  if(checkDone()){ toast('Anda sudah mengisi daftar hadir untuk sesi ini.','err'); return; }
   const btn = $('#submitBtn'); btn.disabled = true; btn.innerHTML = '<span class="spin"></span>Mengirim…';
   const payload = { nama:$('#fNama').value.trim(), eventId:$('#fEvent').value, unit:unitValue(), jabatan:$('#fJabatan').value.trim(), email:$('#fEmail').value.trim(), mode:getMode(), tempat:getMode()==='Online'?'Online':$('#fTempat').value.trim(), paraf:Sig.toDataURL() };
+  const evp = state.events.find(x=>x.id===payload.eventId);
+  payload.tanggalHadir = evp?.recurring ? $('#fTglHadir').value : (evp?.tanggal || todayISO());
+  payload.jamHadir = evp?.recurring ? $('#fJamHadir').value : nowHM();
   try{
     const res = await api('submit', payload);
     const ev = state.events.find(x=>x.id===payload.eventId);
     Draft.clear();
+    Done.set(ev?.recurring ? payload.eventId+'|'+payload.tanggalHadir : payload.eventId, { nama:payload.nama, unit:payload.unit, mode:payload.mode, tempat:payload.tempat, paraf:!!payload.paraf, tanggalHadir:payload.tanggalHadir, jamHadir:payload.jamHadir, waktu:res?.waktu||new Date().toISOString() });
     showSuccess(payload, ev, res);
   }catch(err){ toast(err.message, 'err'); }
   finally{ btn.disabled = false; btn.innerHTML = ico('send') + 'Kirim Daftar Hadir'; }
 }
-function showSuccess(p, ev, res){
+const Done = {
+  KEY:'absensi_done',
+  all(){ return ls.get(this.KEY, {}) || {}; },
+  get(id){ return id ? this.all()[id] : null; },
+  set(id, d){ const a = this.all(); a[id] = d; ls.set(this.KEY, a); }
+};
+function showSuccess(p, ev, res, already){
   $('#formCard').classList.add('hidden'); $('#successCard').classList.remove('hidden');
   $('#successCard').innerHTML = `<div class="success">
     <div class="check"><svg class="i" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div>
-    <h2>Terima kasih, kehadiran tercatat!</h2>
-    <p>Data daftar hadir Anda sudah berhasil dikirim ke panitia.</p>
+    <h2>${already?'Anda sudah tercatat hadir':'Terima kasih, kehadiran tercatat!'}</h2>
+    <p>${already?'Daftar hadir untuk acara ini sudah dikirim dari perangkat ini. Pengisian hanya dapat dilakukan satu kali.':'Data daftar hadir Anda sudah berhasil dikirim ke panitia. Pengisian hanya dapat dilakukan satu kali.'}</p>
     <div class="receipt">
       <div><span>Nama</span><b>${esc(p.nama)}</b></div>
       <div><span>Acara</span><b>${esc(ev?.nama||'-')}</b></div>
       <div><span>Unit Kerja</span><b>${esc(p.unit)}</b></div>
+      ${ev?.recurring?`<div><span>Sesi hadir</span><b>${esc(fmtDate(p.tanggalHadir,{weekday:'long',day:'numeric',month:'long',year:'numeric'}))} · ${esc(p.jamHadir||'')}</b></div>`:''}
       <div><span>Kehadiran</span><b>${p.mode==='Online'?'Online':'Offline · '+esc(p.tempat)}</b></div>
       <div><span>Waktu</span><b>${esc(fmtDT(res?.waktu||new Date()))}</b></div>
       <div><span>Paraf</span><b>${p.paraf?'✓ Terlampir':'—'}</b></div>
     </div>
-    <button class="btn primary" id="againBtn">${ico('plus')}Isi untuk peserta lain</button>
   </div>`;
-  $('#againBtn').onclick = () => resetForm(p.eventId);
   window.scrollTo({top:0,behavior:'smooth'});
 }
 function resetForm(keepEvent){
@@ -842,6 +980,7 @@ function bindForm(){
   $('#form').addEventListener('submit', submitForm);
   $('#form').addEventListener('input', e => { e.target.closest('.field')?.classList.remove('err'); Draft.save(); updateProgress(); });
   $('#fEvent').addEventListener('change', onEventChange);
+  $('#fTglHadir').addEventListener('change', checkDone);
   $('#fUnit').addEventListener('change', () => { syncUnit(); if($('#fUnit').value===UNIT_MANUAL) $('#fUnitLain').focus(); });
   $$('input[name=mode]').forEach(r => r.addEventListener('change', () => { syncMode(); if(getMode()==='Offline') $('#fTempat').focus(); }));
   $('#fTempat').addEventListener('input', () => { $('#fTempat').dataset.auto=''; });
@@ -861,10 +1000,11 @@ async function loadConfig(){
     state.events = c.events||[]; state.units = c.units||[];
     renderEventOptions();
     const d = Draft.load();
-    if(d){ $('#fNama').value=d.nama||''; $('#fJabatan').value=d.jabatan||''; $('#fEmail').value=d.email||''; if(d.unit) $('#fUnit').value=d.unit; $('#fUnitLain').value=d.unitLain||''; syncUnit(); if(d.eventId) $('#fEvent').value=d.eventId; setMode(d.mode); $('#fTempat').value=d.tempat||''; Sig.set(d.sig); if(d.nama||d.jabatan) $('#draftSt').textContent='Draft dipulihkan'; }
+    if(d){ $('#fNama').value=d.nama||''; $('#fJabatan').value=d.jabatan||''; $('#fEmail').value=d.email||''; if(d.unit) $('#fUnit').value=d.unit; $('#fUnitLain').value=d.unitLain||''; syncUnit(); if(d.eventId && !Done.get(d.eventId)) $('#fEvent').value=d.eventId; setMode(d.mode); $('#fTempat').value=d.tempat||''; Sig.set(d.sig); if(d.nama||d.jabatan) $('#draftSt').textContent='Draft dipulihkan'; }
     const u = urlEventId();
     if(u){ if(state.events.some(e=>e.id===u)) $('#fEvent').value=u; else toast('Acara pada link tidak aktif / tidak ditemukan.', 'err'); }
-    if(!$('#fEvent').value && state.events.length===1) $('#fEvent').value = state.events[0].id;
+    if(!$('#fEvent').value){ const open = state.events.filter(e=>!Done.get(e.id)); if(state.events.length===1) $('#fEvent').value = state.events[0].id; else if(open.length===1) $('#fEvent').value = open[0].id; }
+    // jangan pilih otomatis acara yang sudah diisi bila datang dari draft
     onEventChange(); updateProgress();
   }catch(err){
     $('#fEvent').innerHTML = '<option value="">Gagal memuat acara</option>';
@@ -933,19 +1073,30 @@ async function loadDashboard(){
     const fe = $('#filterEvt'), cur = fe.value;
     fe.innerHTML = '<option value="">Semua acara</option>' + state.allEvents.map(e=>`<option value="${esc(e.id)}">${esc(e.nama)}</option>`).join('');
     fe.value = state.allEvents.some(e=>e.id===cur) ? cur : '';
-    renderRekap(); renderEvents(); renderUnits();
+    renderRekap(); renderEvents(); renderUnits(); if(!$('#tabAnalisa').classList.contains('hidden')) renderAnalisa();
   }catch(err){
     if(/sesi|login/i.test(err.message)){ logout(); toast(err.message,'err'); return; }
     $('#rows').innerHTML = `<tr><td colspan="8"><div class="empty">${esc(err.message)}</div></td></tr>`;
   }
 }
+function syncSesi(){
+  const evSel = state.allEvents.find(e=>e.id===$('#filterEvt').value), fs = $('#filterSesi');
+  if(evSel?.recurring){
+    const dates = [...new Set(state.rows.filter(r=>r.eventId===evSel.id).map(r=>r.tanggalHadir).filter(Boolean))].sort().reverse();
+    const cur = fs.value;
+    fs.innerHTML = '<option value="">Semua sesi</option>' + dates.map(d=>`<option value="${esc(d)}">Sesi ${esc(fmtDate(d,{weekday:'short',day:'numeric',month:'short',year:'numeric'}))}</option>`).join('');
+    fs.value = dates.includes(cur) ? cur : ''; fs.classList.remove('hidden');
+  } else { fs.value=''; fs.classList.add('hidden'); }
+}
 function filtered(){
-  const ev = $('#filterEvt').value, q = $('#search').value.trim().toLowerCase();
-  return state.rows.filter(r => (!ev || r.eventId===ev) && (!q || [r.nama,r.unit,r.jabatan,r.email,r.acara,r.tempat,r.mode].join(' ').toLowerCase().includes(q)));
+  const ev = $('#filterEvt').value, q = $('#search').value.trim().toLowerCase(), ses = $('#filterSesi').value;
+  return state.rows.filter(r => (!ev || r.eventId===ev) && (!ses || r.tanggalHadir===ses) && (!q || [r.nama,r.unit,r.jabatan,r.email,r.acara,r.tempat,r.mode].join(' ').toLowerCase().includes(q)));
 }
 function renderRekap(){
+  syncSesi();
   const rows = filtered();
-  const evRows = $('#filterEvt').value ? state.rows.filter(r=>r.eventId===$('#filterEvt').value) : state.rows;
+  const fe = $('#filterEvt').value, fsv = $('#filterSesi').value;
+  const evRows = state.rows.filter(r => (!fe || r.eventId===fe) && (!fsv || r.tanggalHadir===fsv));
   $('#sTotal').textContent = evRows.length;
   $('#sEvt').textContent = state.allEvents.filter(e=>e.aktif).length;
   $('#sUnit').textContent = new Set(evRows.map(r=>r.unit)).size;
@@ -955,7 +1106,7 @@ function renderRekap(){
       <td style="color:var(--muted)">${i+1}</td>
       <td><div class="who"><span class="av" style="background:hsl(${hue(r.nama)} 65% 48%)">${esc(initials(r.nama))}</span><div><b>${esc(r.nama)}</b><small>${esc(r.jabatan)}${r.email?' · '+esc(r.email):''}</small></div></div></td>
       <td><span class="badge">${esc(r.unit)}</span></td>
-      <td style="min-width:170px;max-width:240px">${esc(r.acara)}</td>
+      <td style="min-width:170px;max-width:240px">${esc(r.acara)}${evById(r.eventId)?.recurring && r.tanggalHadir?`<div style="font-size:12px;color:var(--muted);margin-top:4px">${ico('refresh','i" style="width:12px;height:12px;vertical-align:-1px')} Sesi ${esc(fmtDate(r.tanggalHadir,{day:'numeric',month:'short'}))}${r.jamHadir?' · '+esc(r.jamHadir):''}</div>`:''}</td>
       <td>${r.mode==='Online'?`<span class="badge" style="background:rgba(124,92,255,.14);color:#7c5cff">${ico('wifi')}Online</span>`:`<span class="badge on">${ico('pin')}Offline</span><div style="font-size:12px;color:var(--muted);margin-top:4px">${esc(r.tempat||'-')}</div>`}</td>
       <td style="white-space:nowrap;color:var(--muted)">${esc(fmtDT(r.waktu))}</td>
       <td>${r.paraf?`<img class="sig-img" src="${esc(r.paraf)}" alt="Paraf ${esc(r.nama)}">`:'<span style="color:var(--faint)">—</span>'}</td>
@@ -981,7 +1132,7 @@ function editRow(r){
       <div class="field full"><label>Nama Lengkap <span class="req">*</span></label><div class="control">${ico('user')}<input class="input" name="nama" value="${esc(r.nama)}" maxlength="120"></div></div>
       <div class="field"><label>Unit Kerja <span class="req">*</span></label><div class="control">${ico('build')}<select class="select" name="unit">${state.units.map(u=>`<option ${u===r.unit?'selected':''}>${esc(u)}</option>`).join('')}<option ${inList?'':'selected'}>${UNIT_MANUAL}</option></select></div>
         <div class="control ${inList?'hidden':''}" id="eUnitLain" style="margin-top:8px">${ico('edit')}<input class="input" name="unitLain" value="${inList?'':esc(r.unit)}" placeholder="Ketik unit kerja"></div></div>
-      <div class="field"><label>Jabatan <span class="req">*</span></label><div class="control">${ico('badge')}<input class="input" name="jabatan" list="jabatanList" value="${esc(r.jabatan)}" maxlength="80"></div></div>
+      <div class="field"><label>Jabatan <span class="req">*</span></label><div class="control">${ico('badge')}<input class="input" name="jabatan" value="${esc(r.jabatan)}" placeholder="VP / Manager / Section Head / Officer / Staff" maxlength="80"></div></div>
       <div class="field full"><label>Email</label><div class="control">${ico('mail')}<input class="input" name="email" value="${esc(r.email)}" maxlength="120"></div></div>
       <div class="field"><label>Kehadiran</label><div class="seg">
         <label><input type="radio" name="emode" value="Offline" ${r.mode!=='Online'?'checked':''}><span>${ico('pin')}Offline</span></label>
@@ -1001,6 +1152,99 @@ function editRow(r){
     catch(err){ toast(err.message,'err'); b.disabled=false; b.innerHTML=ico('check')+'Simpan'; }
   };
 }
+/* ---------- Analisa ---------- */
+function tipInit(){
+  const t = document.createElement('div'); t.className='tip'; document.body.appendChild(t);
+  document.addEventListener('pointermove', e => {
+    const el = e.target.closest && e.target.closest('[data-tip]');
+    if(!el){ t.classList.remove('on'); return; }
+    t.textContent = el.dataset.tip; t.style.left = e.clientX+'px'; t.style.top = e.clientY+'px'; t.classList.add('on');
+  });
+}
+function jabatanGroup(j){
+  const t = String(j||'').trim().toLowerCase().replace(/\s+/g,' ');
+  if(!t) return 'Tidak diisi';
+  if(/\b(vp|svp|evp|vice president)\b/.test(t)) return 'VP';
+  if(/(section head|kepala seksi|\bkasi\b|\bkasie\b|\bsh\b)/.test(t)) return 'Section Head';
+  if(/(manager|manajer|\bmgr\b|\bgm\b)/.test(t)) return 'Manager';
+  if(/officer/.test(t)) return 'Officer';
+  if(/\bstaf+\b/.test(t)) return 'Staff';
+  return t.replace(/\b\w/g, c=>c.toUpperCase());
+}
+const pct = (a,b) => b ? Math.round(a/b*1000)/10 : 0;
+const fmtPct = v => (Math.round(v*10)/10).toLocaleString('id-ID') + '%';
+function renderAnalisa(){
+  const sel = $('#anaEvt'), cur = sel.value;
+  sel.innerHTML = '<option value="">Semua acara</option>' + state.allEvents.map(e=>`<option value="${esc(e.id)}">${esc(e.nama)}</option>`).join('');
+  sel.value = state.allEvents.some(e=>e.id===cur) ? cur : '';
+  const evs = sel.value ? state.allEvents.filter(e=>e.id===sel.value) : state.allEvents;
+  const ids = new Set(evs.map(e=>e.id));
+  const rows = state.rows.filter(r=>ids.has(r.eventId) || (!sel.value && !state.allEvents.some(e=>e.id===r.eventId)));
+  const cnt = id => state.rows.filter(r=>r.eventId===id).length;
+  const sesiN = e => e.recurring ? Math.max(1, new Set(state.rows.filter(r=>r.eventId===e.id).map(r=>r.tanggalHadir)).size) : 1;
+  const withT = evs.filter(e=>+e.target>0);
+  const hadirT = withT.reduce((a,e)=>a+cnt(e.id),0), target = withT.reduce((a,e)=>a+(+e.target)*sesiN(e),0);
+  const on = rows.filter(r=>r.mode==='Online').length, off = rows.length-on;
+  const rate = target ? pct(hadirT,target) : null;
+  $('#anaStats').innerHTML = `
+    <div class="card stat"><div class="stat-ic c2">${ico('chart')}</div><div><div class="stat-v">${rate==null?'—':fmtPct(rate)}</div><div class="stat-l">Tingkat kehadiran${target?` (${hadirT}/${target})`:' · target belum diisi'}</div></div></div>
+    <div class="card stat"><div class="stat-ic c1">${ico('users')}</div><div><div class="stat-v">${rows.length}</div><div class="stat-l">Total hadir${target?` · ${Math.max(target-hadirT,0)} belum hadir`:''}</div></div></div>
+    <div class="card stat"><div class="stat-ic c1">${ico('pin')}</div><div><div class="stat-v">${fmtPct(pct(off,rows.length))}</div><div class="stat-l">Offline (${off} orang)</div></div></div>
+    <div class="card stat"><div class="stat-ic c3">${ico('wifi')}</div><div><div class="stat-v">${fmtPct(pct(on,rows.length))}</div><div class="stat-l">Online (${on} orang)</div></div></div>`;
+
+  // per event bars
+  $('#anaEvents').innerHTML = evs.length ? `<div class="hb">` + evs.map(e=>{
+    const n = sesiN(e), h = cnt(e.id), t = (+e.target||0)*n, p = t ? pct(h,t) : null;
+    const sl = e.recurring ? ` · ${n} sesi` : '';
+    const tip = `${e.nama}: ${h} hadir${t?` dari ${t} undangan${e.recurring?` (${e.target}/sesi × ${n} sesi)`:''} (${fmtPct(p)})`:''}`;
+    return `<div class="hb-row"><div class="top"><b title="${esc(e.nama)}">${e.recurring?ico('refresh','i" style="width:13px;height:13px;vertical-align:-2px;margin-right:4px'):''}${esc(e.nama)}</b><span>${t?`${h}/${t}${sl} · <b style="color:var(--text)">${fmtPct(p)}</b>`:`${h} hadir${sl} · tanpa target`}</span></div>
+      <div class="hb-track" data-tip="${esc(tip)}"><div class="hb-fill" style="width:${t?Math.min(p,100):(h?100:0)}%;${t?'':'opacity:.35'}"></div></div></div>`;
+  }).join('') + `</div>` : '<div class="hint">Belum ada acara.</div>';
+
+  // donut
+  const R=70, C=85, W=22;
+  const arc = (a0,a1) => { const p=(a)=>[C+R*Math.sin(a), C-R*Math.cos(a)]; const [x0,y0]=p(a0),[x1,y1]=p(a1); const large=(a1-a0)>Math.PI?1:0; return `M${x0} ${y0} A${R} ${R} 0 ${large} 1 ${x1} ${y1}`; };
+  let donut;
+  if(!rows.length) donut = `<circle cx="${C}" cy="${C}" r="${R}" fill="none" stroke="var(--surface-3)" stroke-width="${W}"/>`;
+  else if(!on || !off) donut = `<circle cx="${C}" cy="${C}" r="${R}" fill="none" stroke="${on?'var(--c-on)':'var(--c-off)'}" stroke-width="${W}" data-tip="${on?'Online':'Offline'}: ${rows.length} orang (100%)"/>`;
+  else { const gap = 0.035, aOff = off/rows.length*Math.PI*2;
+    donut = `<path d="${arc(gap/2, aOff-gap/2)}" fill="none" stroke="var(--c-off)" stroke-width="${W}" data-tip="Offline: ${off} orang (${fmtPct(pct(off,rows.length))})"/>
+             <path d="${arc(aOff+gap/2, Math.PI*2-gap/2)}" fill="none" stroke="var(--c-on)" stroke-width="${W}" data-tip="Online: ${on} orang (${fmtPct(pct(on,rows.length))})"/>`; }
+  $('#anaMode').innerHTML = `<div class="donut-wrap"><svg viewBox="0 0 170 170" role="img" aria-label="Online ${on}, Offline ${off}">${donut}
+      <text x="85" y="82" text-anchor="middle" font-size="28" font-weight="700" fill="var(--text)" font-family="var(--font)">${rows.length}</text>
+      <text x="85" y="104" text-anchor="middle" font-size="12" fill="var(--muted)" font-family="var(--font)">peserta</text></svg>
+    <div class="legend">
+      <div class="lg"><span class="sw" style="background:var(--c-off)"></span><div><b>${fmtPct(pct(off,rows.length))}</b><small>Offline · ${off} orang</small></div></div>
+      <div class="lg"><span class="sw" style="background:var(--c-on)"></span><div><b>${fmtPct(pct(on,rows.length))}</b><small>Online · ${on} orang</small></div></div>
+    </div></div>`;
+
+  // unit composition
+  const uc = {}; rows.forEach(r=>uc[r.unit]=(uc[r.unit]||0)+1);
+  let ua = Object.entries(uc).sort((a,b)=>b[1]-a[1]);
+  if(ua.length>8){ const rest = ua.slice(7).reduce((a,x)=>a+x[1],0); ua = [...ua.slice(0,7), ['Lainnya ('+(ua.length-7)+' unit)', rest]]; }
+  const umax = ua[0]?.[1]||1;
+  $('#anaUnit').innerHTML = ua.length ? `<div class="hb">` + ua.map(([u,n])=>`<div class="hb-row"><div class="top"><b>${esc(u)}</b><span>${n} · <b style="color:var(--text)">${fmtPct(pct(n,rows.length))}</b></span></div>
+      <div class="hb-track" data-tip="${esc(u)}: ${n} orang (${fmtPct(pct(n,rows.length))})"><div class="hb-fill" style="width:${n/umax*100}%"></div></div></div>`).join('') + `</div>` : '<div class="hint">Belum ada data kehadiran.</div>';
+
+  // jabatan composition (dikelompokkan dari isian bebas)
+  const jc = {}; rows.forEach(r=>{ const k = jabatanGroup(r.jabatan); jc[k]=(jc[k]||0)+1; });
+  let ja = Object.entries(jc).sort((a,b)=>b[1]-a[1]);
+  if(ja.length>8){ const rest = ja.slice(7).reduce((a,x)=>a+x[1],0); ja = [...ja.slice(0,7), ['Lainnya ('+(ja.length-7)+' jabatan)', rest]]; }
+  const jmax = ja[0]?.[1]||1;
+  $('#anaJab').innerHTML = ja.length ? `<div class="hb">` + ja.map(([j,n])=>`<div class="hb-row"><div class="top"><b>${esc(j)}</b><span>${n} · <b style="color:var(--text)">${fmtPct(pct(n,rows.length))}</b></span></div>
+      <div class="hb-track" data-tip="${esc(j)}: ${n} orang (${fmtPct(pct(n,rows.length))})"><div class="hb-fill" style="width:${n/jmax*100}%"></div></div></div>`).join('') + `</div>` : '<div class="hint">Belum ada data kehadiran.</div>';
+
+  // arrival hours
+  const hc = {}; rows.forEach(r=>{ let h = /^\d{2}:\d{2}/.test(r.jamHadir||'') ? parseInt(r.jamHadir,10) : new Date(r.waktu).getHours(); if(!isNaN(h)) hc[h]=(hc[h]||0)+1; });
+  const hs = Object.keys(hc).map(Number);
+  if(!hs.length){ $('#anaHour').innerHTML = '<div class="hint">Belum ada data kehadiran.</div>'; return; }
+  const h0 = Math.min(...hs), h1 = Math.max(...hs), hmax = Math.max(...Object.values(hc));
+  const hours = []; for(let h=h0; h<=h1; h++) hours.push(h);
+  const hh = h => String(h).padStart(2,'0')+'.00';
+  $('#anaHour').innerHTML = `<div class="cols">${hours.map(h=>`<div class="col" data-tip="${hh(h)}–${hh(h+1)}: ${hc[h]||0} orang"><em>${hc[h]||''}</em><i style="height:${(hc[h]||0)/hmax*100}%"></i></div>`).join('')}</div>
+    <div class="col-x">${hours.map(h=>`<span>${hh(h)}</span>`).join('')}</div>`;
+}
+
 function eventLink(id){
   const base = location.href.split('#')[0].split('?')[0];
   return base + '?event=' + encodeURIComponent(id);
@@ -1008,11 +1252,11 @@ function eventLink(id){
 function renderEvents(){
   const counts = {}; state.rows.forEach(r=>counts[r.eventId]=(counts[r.eventId]||0)+1);
   $('#evtList').innerHTML = state.allEvents.length ? state.allEvents.map(e=>`<div class="card evt-item">
-      <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start"><h4>${esc(e.nama)}</h4><span class="badge ${e.aktif?'on':''}">${e.aktif?'● Aktif':'Ditutup'}</span></div>
+      <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start"><h4>${esc(e.nama)}</h4><div style="display:flex;flex-direction:column;gap:5px;align-items:flex-end">${e.recurring?`<span class="badge rec">${ico('refresh')}Berulang</span>`:''}<span class="badge ${e.aktif?'on':''}">${e.aktif?'● Aktif':'Ditutup'}</span></div></div>
       <div class="meta">
-        <div class="meta-row">${ico('cal')}${esc(fmtDate(e.tanggal,{weekday:'short',day:'numeric',month:'long',year:'numeric'}))}${e.jam?' · '+esc(e.jam):''}</div>
+        <div class="meta-row">${ico('cal')}${e.recurring?`${esc(POLA[e.pola]||'Berulang')} · ${esc(fmtDate(e.tanggal,{day:'numeric',month:'short',year:'numeric'}))}${e.sampai?' – '+esc(fmtDate(e.sampai,{day:'numeric',month:'short',year:'numeric'})):' – seterusnya'}`:esc(fmtDate(e.tanggal,{weekday:'short',day:'numeric',month:'long',year:'numeric'}))}${e.jam?' · '+esc(e.jam):''}</div>
         <div class="meta-row">${ico('pin')}${esc(e.tempat||'-')}</div>
-        <div class="meta-row">${ico('users')}${counts[e.id]||0} peserta hadir</div>
+        <div class="meta-row">${ico('users')}${counts[e.id]||0}${e.target?` / ${e.target}`:''} peserta hadir${e.target?` · ${Math.round((counts[e.id]||0)/e.target*100)}%`:''}</div>
       </div>
       <span class="code" style="align-self:flex-start">${esc(e.id)}</span>
       <div class="row-btns">
@@ -1035,16 +1279,26 @@ function editEvent(e){
   const m = modal(`<div class="modal-h"><div><h3>${isNew?'Buat Acara Baru':'Ubah Acara'}</h3><p>${isNew?'Acara aktif langsung muncul di formulir peserta.':esc(e.id)}</p></div>${closeX}</div>
     <form id="evtForm" class="fields">
       <div class="field full"><label>Nama Acara <span class="req">*</span></label><div class="control">${ico('flag')}<input class="input" name="nama" value="${esc(e.nama)}" placeholder="Contoh: Safety Induction Karyawan Baru" required maxlength="140"></div></div>
-      <div class="field"><label>Tanggal</label><div class="control">${ico('cal')}<input class="input" type="date" name="tanggal" value="${esc(e.tanggal)}"></div></div>
+      <div class="field"><label id="tglLbl">${e.recurring?'Tanggal mulai':'Tanggal'}</label><div class="control">${ico('cal')}<input class="input" type="date" name="tanggal" value="${esc(e.tanggal)}"></div></div>
       <div class="field"><label>Jam</label><div class="control">${ico('clock')}<input class="input" name="jam" value="${esc(e.jam)}" placeholder="08.00 – 10.00 WIB" maxlength="40"></div></div>
-      <div class="field full"><label>Lokasi default <span class="opt">(terisi otomatis untuk peserta offline)</span></label><div class="control">${ico('pin')}<input class="input" name="tempat" value="${esc(e.tempat)}" placeholder="Ruang rapat / lokasi" maxlength="120"></div></div>
+      <div class="field full"><label>Tempat <span class="opt">(terisi otomatis untuk peserta offline)</span></label><div class="control">${ico('pin')}<input class="input" name="tempat" value="${esc(e.tempat)}" placeholder="Contoh: R. Building Lantai 3 WITO 1" maxlength="120"></div></div>
+      <div class="field"><label>Target peserta <span class="opt">(jumlah undangan)</span></label><div class="control">${ico('users')}<input class="input" type="number" min="0" name="target" value="${esc(e.target||'')}" placeholder="Contoh: 25"></div></div>
+      <div class="field"><label>Unit kerja penyelenggara</label><div class="control">${ico('build')}<input class="input" name="penyelenggara" value="${esc(e.penyelenggara||'Kantor Pusat')}" maxlength="80"></div></div>
+      <div class="field full"><label>Pimpinan rapat <span class="opt">(opsional, untuk kolom "Mengetahui")</span></label><div class="control">${ico('user')}<input class="input" name="pimpinan" value="${esc(e.pimpinan||'')}" placeholder="Nama pimpinan rapat" maxlength="80"></div></div>
+      <label class="switch full"><input type="checkbox" name="recurring" ${e.recurring?'checked':''}><i></i>Acara berulang (recurring) — peserta mengisi tanggal & jam hadir sendiri</label>
+      <div class="full ${e.recurring?'':'hidden'}" id="recBox" style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+        <div class="field"><label>Pola pengulangan</label><div class="control">${ico('refresh')}<select class="select" name="pola">${Object.entries(POLA).map(([k,v])=>`<option value="${k}" ${(e.pola||'mingguan')===k?'selected':''}>${v}</option>`).join('')}</select></div></div>
+        <div class="field"><label>Berlaku sampai <span class="opt">(opsional)</span></label><div class="control">${ico('cal')}<input class="input" type="date" name="sampai" value="${esc(e.sampai||'')}"></div></div>
+      </div>
       <label class="switch full"><input type="checkbox" name="aktif" ${e.aktif?'checked':''}><i></i>Acara aktif (bisa diisi peserta)</label>
     </form>
     <div class="modal-actions"><button class="btn" data-close>Batal</button><button class="btn primary" id="evtSave">${ico('check')}Simpan</button></div>`, true);
   m.querySelector('[data-close]').onclick = ()=>m.remove();
+  const rc = m.querySelector('[name=recurring]');
+  rc.onchange = () => { m.querySelector('#recBox').classList.toggle('hidden', !rc.checked); m.querySelector('#tglLbl').textContent = rc.checked ? 'Tanggal mulai' : 'Tanggal'; };
   const save = async () => {
     const f = m.querySelector('#evtForm'); const b = m.querySelector('#evtSave');
-    const ev = { id:e.id, nama:f.nama.value, tanggal:f.tanggal.value, jam:f.jam.value, tempat:f.tempat.value, aktif:f.aktif.checked };
+    const ev = { id:e.id, nama:f.nama.value, tanggal:f.tanggal.value, jam:f.jam.value, tempat:f.tempat.value, aktif:f.aktif.checked, target:f.target.value, penyelenggara:f.penyelenggara.value, pimpinan:f.pimpinan.value, recurring:f.recurring.checked, pola:f.pola.value, sampai:f.sampai.value };
     if(!ev.nama.trim()){ f.nama.focus(); toast('Nama acara wajib diisi.','err'); return; }
     b.disabled=true; b.innerHTML='<span class="spin"></span>Menyimpan…';
     try{ const saved = await api('saveEvent',{event:ev}); m.remove(); toast(isNew?'Acara dibuat.':'Acara diperbarui.'); await loadDashboard(); if(isNew) showQR(state.allEvents.find(x=>x.id===saved.id)||saved); }
@@ -1081,7 +1335,7 @@ async function saveUnits(units){
 }
 function switchTab(t){
   $$('.tab').forEach(x=>x.classList.toggle('on', x.dataset.tab===t));
-  $('#tabRekap').classList.toggle('hidden', t!=='rekap'); $('#tabAcara').classList.toggle('hidden', t!=='acara'); $('#tabUnit').classList.toggle('hidden', t!=='unit');
+  $('#tabRekap').classList.toggle('hidden', t!=='rekap'); $('#tabAnalisa').classList.toggle('hidden', t!=='analisa'); if(t==='analisa') renderAnalisa(); $('#tabAcara').classList.toggle('hidden', t!=='acara'); $('#tabUnit').classList.toggle('hidden', t!=='unit');
 }
 function logout(){ state.token=null; ss.del('absensi_token'); showForm(); }
 
@@ -1099,27 +1353,64 @@ async function downloadFile(filename, data, mime){
 }
 function exportExcel(){
   const rows = exportRows(); if(!rows.length){ toast('Tidak ada data untuk diunduh.','err'); return; }
-  const head = ['No','Nama Lengkap','Unit Kerja','Jabatan','Email','Acara','Tanggal Acara','Kehadiran','Tempat','Waktu Input','Paraf'];
-  const body = rows.map((r,i)=>[i+1,r.nama,r.unit,r.jabatan,r.email,r.acara,fmtDate(r.tanggalAcara),r.mode||'Offline',r.tempat,fmtDT(r.waktu),r.paraf?'Ada':'-']);
+  const head = ['No','Nama Lengkap','Unit Kerja','Jabatan','Email','Acara','Tanggal Hadir','Jam Hadir','Kehadiran','Tempat','Waktu Input','Paraf'];
+  const body = rows.map((r,i)=>[i+1,r.nama,r.unit,r.jabatan,r.email,r.acara,fmtDate(r.tanggalHadir||r.tanggalAcara),r.jamHadir||'',r.mode||'Offline',r.tempat,fmtDT(r.waktu),r.paraf?'Ada':'-']);
   const html = `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel"><head><meta charset="utf-8"></head><body><table border="1"><tr>${head.map(h=>`<th style="background:#079CDB;color:#fff">${h}</th>`).join('')}</tr>${body.map(r=>`<tr>${r.map(c=>`<td>${esc(c)}</td>`).join('')}</tr>`).join('')}</table></body></html>`;
   const ev = state.allEvents.find(e=>e.id===$('#filterEvt').value);
   downloadFile(`Daftar-Hadir_${(ev?.nama||'Semua-Acara').replace(/[^\w]+/g,'-')}_${new Date().toISOString().slice(0,10)}.xls`, '﻿'+html, 'application/vnd.ms-excel');
 }
 function copyTable(){
   const rows = exportRows(); if(!rows.length){ toast('Tidak ada data.','err'); return; }
-  const t = [['No','Nama','Unit Kerja','Jabatan','Email','Acara','Kehadiran','Tempat','Waktu Input'].join('\t'), ...rows.map((r,i)=>[i+1,r.nama,r.unit,r.jabatan,r.email,r.acara,r.mode||'Offline',r.tempat,fmtDT(r.waktu)].join('\t'))].join('\n');
+  const t = [['No','Nama','Unit Kerja','Jabatan','Email','Acara','Tanggal Hadir','Jam Hadir','Kehadiran','Tempat','Waktu Input'].join('\t'), ...rows.map((r,i)=>[i+1,r.nama,r.unit,r.jabatan,r.email,r.acara,fmtDate(r.tanggalHadir||r.tanggalAcara),r.jamHadir||'',r.mode||'Offline',r.tempat,fmtDT(r.waktu)].join('\t'))].join('\n');
   copyText(t, `${rows.length} baris disalin — tempel ke Excel / Sheets.`);
 }
 function printList(){
-  const rows = exportRows(); if(!rows.length){ toast('Tidak ada data untuk dicetak.','err'); return; }
-  const ev = state.allEvents.find(e=>e.id===$('#filterEvt').value);
-  $('#printArea').innerHTML = `<h1>DAFTAR HADIR HSE EVENT</h1><div class="ps">${esc(CONFIG.ORG_NAME)}</div>
-    <table class="info"><tr><td>Acara</td><td>: ${esc(ev?.nama||'Semua acara')}</td></tr>
-    ${ev?`<tr><td>Hari / Tanggal</td><td>: ${esc(fmtDate(ev.tanggal,{weekday:'long',day:'numeric',month:'long',year:'numeric'}))}${ev.jam?' · '+esc(ev.jam):''}</td></tr>${ev.tempat?`<tr><td>Lokasi</td><td>: ${esc(ev.tempat)}</td></tr>`:''}<tr><td>Kehadiran</td><td>: ${rows.filter(r=>r.mode!=='Online').length} offline · ${rows.filter(r=>r.mode==='Online').length} online</td></tr>`:''}
-    <tr><td>Jumlah peserta</td><td>: ${rows.length} orang</td></tr></table>
-    <table class="list"><thead><tr><th style="width:8mm">No</th><th>Nama Lengkap</th><th>Unit Kerja</th><th>Jabatan</th>${ev?'':'<th>Acara</th>'}<th>Kehadiran</th><th style="width:36mm">Paraf</th></tr></thead>
-    <tbody>${rows.map((r,i)=>`<tr><td style="text-align:center">${i+1}</td><td>${esc(r.nama)}</td><td>${esc(r.unit)}</td><td>${esc(r.jabatan)}</td>${ev?'':`<td>${esc(r.acara)}</td>`}<td>${r.mode==='Online'?'Online':esc(r.tempat||'Offline')}</td><td style="text-align:center">${r.paraf?`<img src="${esc(r.paraf)}">`:''}</td></tr>`).join('')}</tbody></table>
-    <p style="font-size:9pt;margin-top:4mm;color:#555">Dicetak ${esc(fmtDT(new Date()))} · ${esc(CONFIG.APP_TITLE)}</p>`;
+  const rows = exportRows();
+  let evId = $('#filterEvt').value;
+  if(!evId){ const ids = [...new Set(rows.map(r=>r.eventId))]; if(ids.length===1) evId = ids[0]; }
+  const ev = state.allEvents.find(e=>e.id===evId);
+  if(!ev){ toast('Pilih satu acara di filter "Semua acara" untuk mencetak daftar hadir.','err'); $('#filterEvt').focus(); return; }
+  let list = rows.filter(r=>r.eventId===ev.id);
+  let sesi = '';
+  if(ev.recurring){
+    sesi = $('#filterSesi').value;
+    if(!sesi){ const ds = [...new Set(list.map(r=>r.tanggalHadir))]; if(ds.length===1) sesi = ds[0]; }
+    if(!sesi){ toast('Acara berulang: pilih tanggal sesi di filter "Semua sesi" untuk mencetak.','err'); $('#filterSesi').focus(); return; }
+    list = list.filter(r=>r.tanggalHadir===sesi);
+  }
+  const on = list.filter(r=>r.mode==='Online').length, off = list.length-on;
+  let tempat = ev.tempat || (off ? [...new Set(list.filter(r=>r.mode!=='Online').map(r=>r.tempat))].join(', ') : '');
+  if(on && !off) tempat = 'Online';
+  else if(on && off) tempat = (tempat||'-') + ' & Online (hybrid)';
+  const per = CONFIG.PRINT_ROWS_PER_PAGE || 25;
+  const pages = Math.max(1, Math.ceil(list.length/per));
+  const jamMasuk = w => { const d=new Date(w); return isNaN(d)?'':d.toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'}).replace(':','.'); };
+  const sig = r => r && r.paraf ? `<img src="${esc(r.paraf)}" alt="">` : '';
+  let html = '';
+  for(let p=0; p<pages; p++){
+    let body = '';
+    for(let i=p*per; i<(p+1)*per; i++){
+      const r = list[i], no = i+1, odd = no%2===1;
+      body += `<tr><td class="c">${r?no:''}</td><td>${r?esc(r.nama):''}</td><td>${r?esc(r.jabatan):''}</td><td class="c">${r?esc(r.jamHadir?r.jamHadir.replace(':','.'):jamMasuk(r.waktu)):''}</td>
+        <td class="sg ${odd?'':'gr'}">${odd?sig(r):''}</td><td class="sg ${odd?'gr':''}">${odd?'':sig(r)}</td></tr>`;
+    }
+    html += `<section class="sheet">
+      <div class="f-top"><div class="f-co"><b>${esc(CONFIG.PRINT_COMPANY)}</b><br><b>Unit Kerja ${esc(ev.penyelenggara||'Kantor Pusat')}</b></div>
+        <div class="f-no"><div class="f-lamp">${esc(CONFIG.PRINT_LAMPIRAN)}</div><table><tr><td>Form : ${esc(CONFIG.PRINT_FORM_NO)}</td><td>Rev. : ${esc(CONFIG.PRINT_REV)}</td></tr></table></div></div>
+      <h2>DAFTAR HADIR</h2>
+      <table class="f-info">
+        <tr><td>Acara</td><td>:</td><td>${esc(ev.nama)}</td></tr>
+        <tr><td>Tanggal</td><td>:</td><td>${esc(fmtDate(sesi||ev.tanggal,{weekday:'long',day:'numeric',month:'long',year:'numeric'}))}</td></tr>
+        <tr><td>Waktu</td><td>:</td><td>${esc(ev.jam||'-')}</td></tr>
+        <tr><td>Tempat</td><td>:</td><td>${esc(tempat||'-')}</td></tr>
+      </table>
+      <table class="f-list"><colgroup><col style="width:7%"><col style="width:33%"><col style="width:17%"><col style="width:14%"><col style="width:14.5%"><col style="width:14.5%"></colgroup>
+        <thead><tr><th>NO.</th><th>NAMA</th><th>JABATAN</th><th>JAM MASUK</th><th colspan="2">PARAF</th></tr></thead><tbody>${body}</tbody></table>
+      ${p===pages-1?`<div class="f-sign"><div>Mengetahui,<br>Pimpinan Rapat</div><div class="f-line">${esc(ev.pimpinan||'')}</div></div>`:''}
+      <div class="f-pg">Halaman ${p+1} dari ${pages} · Hadir: ${list.length}${ev.target?` dari ${ev.target} undangan`:''} (offline ${off}, online ${on})</div>
+    </section>`;
+  }
+  $('#printArea').innerHTML = html;
   try{ window.print(); }catch{ toast('Cetak tidak tersedia di tampilan ini.','err'); }
 }
 
@@ -1140,12 +1431,15 @@ function printList(){
   $('#logoutBtn').onclick = () => { logout(); toast('Anda telah keluar.'); };
   $('#refreshBtn').onclick = loadDashboard;
   $$('.tab').forEach(t=>t.onclick=()=>switchTab(t.dataset.tab));
-  $('#filterEvt').onchange = renderRekap;
+  $('#filterEvt').onchange = () => { $('#filterSesi').value=''; renderRekap(); };
+  $('#filterSesi').onchange = renderRekap;
   $('#search').oninput = renderRekap;
   $('#newEvtBtn').onclick = () => editEvent(null);
   $('#xlsBtn').onclick = exportExcel; $('#printBtn').onclick = printList; $('#copyBtn').onclick = copyTable;
   $('#unitForm').onsubmit = e => { e.preventDefault(); const v=$('#unitInput').value.trim(); if(!v) return; if(state.units.some(u=>u.toLowerCase()===v.toLowerCase())){ toast('Unit kerja sudah ada.','err'); return; } $('#unitInput').value=''; saveUnits([...state.units, v]); };
   document.addEventListener('keydown', e => { if(e.key==='Escape'){ const m=$$('.modal').pop(); m && m.remove(); } });
+  $('#anaEvt').onchange = renderAnalisa;
+  tipInit();
   if(location.hash==='#admin' && state.token) showAdmin(); else loadConfig();
 })();
 </script>
